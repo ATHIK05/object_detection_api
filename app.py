@@ -1,6 +1,6 @@
 import os
 
-# Download model from Google Drive if not present
+# Ensure gdown is installed and model is downloaded
 try:
     import gdown
 except ImportError:
@@ -8,11 +8,13 @@ except ImportError:
     subprocess.check_call(["pip", "install", "gdown"])
     import gdown
 
+# Model download
 drive_url = "https://drive.google.com/drive/folders/1MAxozJJ0AxKIxHBwSn9loaVqh6j_5uPs?usp=sharing"
 model_dir = "model_dir"
 if not os.path.exists(model_dir):
     gdown.download_folder(drive_url, output=model_dir, quiet=False, use_cookies=False)
 
+# App & model
 from flask import Flask, request, jsonify
 from tf_model_loader import load_model
 from utils import preprocess_image, extract_labels
@@ -41,4 +43,6 @@ def detect():
     })
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # ✅ This allows Railway to bind to the correct port
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
