@@ -1,6 +1,6 @@
-flask
-tensorflow
-tensorflow_hub
-Pillow
-numpy
-gdown
+flask==3.1.1
+tensorflow==2.13.0
+tensorflow_hub==0.15.0
+Pillow==10.3.0
+numpy==1.24.3
+gdown==5.1.0
